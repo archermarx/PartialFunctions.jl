@@ -3,6 +3,7 @@ using Test
 
 a(x) = x^2
 greet(greeting, name, punctuation) = "$(greeting), $(name)$(punctuation)"
+
 @testset "PartialFunctions.jl" begin
     @test map((+)$2, [1,2,3]) == [3, 4, 5]
     @test repr(map $ a) == "map(a, ...)"
@@ -12,7 +13,7 @@ greet(greeting, name, punctuation) = "$(greeting), $(name)$(punctuation)"
     sayhello = greet $ "Hello"
     @test repr(sayhello) == "greet(\"Hello\", ...)"
     @test repr("text/plain", sayhello) == repr(sayhello)
-    
+
     @test sayhello("Bob", "!") == "Hello, Bob!"
     hi_bob = greet $ "Hi" $ "Bob" $ "!"
     @test hi_bob isa PartialFunctions.PartialFunction{typeof(greet), Tuple{String, String, String}}
