@@ -22,15 +22,11 @@ Partially apply the given arguments to f. Typically used as infix `f \$ args`
 
 The returned function is of type [`PartialFunctions.PartialFunction{typeof(f), typeof(args)}`](@ref)
 
-```@meta
-DocTestSetup = quote
-    using PartialFunctions
-end
-```
-
 # Examples
 
 ```jldoctest
+julia> using PartialFunctions
+
 julia> simonsays = println \$ "Simon says: "
 println("Simon says: ", ...)
 
@@ -51,13 +47,10 @@ Applies a function to the succeeding argument or tuple of arguments. Acts as the
 of [`|>`](@ref), and is especially useful when combined with partial functions for 
 an alternative, low-parenthese function chaining syntax
 
-```@meta
-DocTestSetup = quote
-    using PartialFunctions
-end
-```
 # Examples
 ```@jldoctest
+julia> using PartialFunctions
+
 julia> isdigit <| '1'
 true
 
