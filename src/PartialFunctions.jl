@@ -1,6 +1,6 @@
 module PartialFunctions
 
-export $
+export $, <|
 
 name(x) = (string ∘ Symbol)(x)
 
@@ -16,8 +16,62 @@ end
 
 (p::PartialFunction)(newargs...) = p.func(p.args..., newargs...)
 
-($)(f::Function, args...) = PartialFunction(f, args)
+"""
+    (\$)(f::Function, args...)
+Partially apply the given arguments to f. Typically used as infix `f \$ args`
+
+The returned function is of type [`PartialFunctions.PartialFunction{typeof(f), typeof(args)}`](@ref)
+
+```@meta
+DocTestSetup = quote
+    using PartialFunctions
+end
+```
+
+# Examples
+
+```jldoctest
+julia> simonsays = println \$ "Simon says: "
+println("Simon says: ", ...)
+
+julia> simonsays("Partial function application is cool!")
+Simon says: Partial function application is cool!
+
+julia> typeof(simonsays)
+PartialFunctions.PartialFunction{typeof(println),Tuple{String}}
+```
+"""
+($)(f::Function, args::Tuple) = PartialFunction(f, args)
 ($)(f::Function, arg) = PartialFunction(f, (arg,))
+
+"""
+    <|(f, args)
+
+Applies a function to the succeeding argument or tuple of arguments. Acts as the reverse
+of [`|>`](@ref), and is especially useful when combined with partial functions for 
+an alternative, low-parenthese function chaining syntax
+
+```@meta
+DocTestSetup = quote
+    using PartialFunctions
+end
+```
+# Examples
+```@jldoctest
+julia> isdigit <| '1'
+true
+
+julia> (+) <| (2, 3)...
+5
+
+julia> map \$ Int <| [1.0, 2.0, 3.0]
+3-element Array{Int64,1}:
+ 1
+ 2
+ 3
+```
+"""
+(<|)(f::Function, args...) = f(args...)
 
 function Base.Symbol(pf::PartialFunction)
     func_name = name(pf.func)
