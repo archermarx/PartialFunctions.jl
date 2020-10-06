@@ -14,4 +14,6 @@ greet(greeting, name, punctuation) = "$(greeting), $(name)$(punctuation)"
     @test sayhello("Bob", "!") == "Hello, Bob!"
     hi_bob = greet $ "Hi" $ "Bob" $ "!"
     @test hi_bob isa PartialFunctions.PartialFunction{typeof(greet), Tuple{String, String, String}}
+    @test hi_bob <| () == "Hi, Bob!"
+    @test sayhello <| ("Jimmy", "?")... == "Hello, Jimmy?"
 end

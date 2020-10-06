@@ -1,6 +1,8 @@
 ```@meta
 CurrentModule = PartialFunctions
-using PartialFunctions
+DocTestSetup = quote
+    using PartialFunctions
+end
 ```
 
 # PartialFunctions
