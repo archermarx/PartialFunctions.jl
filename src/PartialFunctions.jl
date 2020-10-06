@@ -65,6 +65,7 @@ julia> map \$ Int <| [1.0, 2.0, 3.0]
 ```
 """
 (<|)(f::Function, args...) = f(args...)
+(<|)(f::Function, ::Tuple{}) = f()
 
 function Base.Symbol(pf::PartialFunction)
     func_name = name(pf.func)
