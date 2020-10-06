@@ -13,13 +13,13 @@ This is a small Julia package that makes partial function application as simple 
 
 To apply an argument `x` to a function `f`, use the `$` binary operator like so
 
-```jldoctest
+```julia-repl
 julia> f $ x
 f(x, ...)
 ```
 
 To apply multiple arguments, wrap them in a `Tuple`, like you would a normal function call
-```jldoctest
+```julia-repl
 julia> f $ (x, y, z)
 f(x, y, z, ...)
 ```
