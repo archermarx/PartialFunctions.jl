@@ -1,7 +1,7 @@
 name = "PartialFunctions"
 uuid = "570af359-4316-4cb7-8c74-252c00c2016b"
 authors = ["Thomas Marks <marksta@umich.edu> and contributors"]
-version = "1.0.1"
+version = "1.0.3"
 
 [compat]
 julia = "1.5"
