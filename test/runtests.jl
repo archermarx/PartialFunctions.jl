@@ -4,7 +4,7 @@ using Test
 a(x) = x^2
 greet(greeting, name, punctuation) = "$(greeting), $(name)$(punctuation)"
 
-@testset "PartialFunctions.jl" begin
+@testset "Partial functions" begin
     @test map((+)$2, [1,2,3]) == [3, 4, 5]
     @test repr(map $ a) == "map(a, ...)"
     @test (map $ a)([1, 2, 3]) == [1, 4, 9]
