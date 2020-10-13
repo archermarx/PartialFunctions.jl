@@ -1,8 +1,9 @@
 module PartialFunctions
 
 export $, <|
+include("reversedfunctions.jl")
 
-name(x) = (string ∘ Symbol)(x)
+name = (string ∘ Symbol)
 
 struct PartialFunction{F<:Function, T<:Tuple} <: Function
     func::F

@@ -22,3 +22,18 @@ greet(greeting, name, punctuation) = "$(greeting), $(name)$(punctuation)"
 
     @test greet $ ("Hi", "Bob") <| "!" == "Hi, Bob!"
 end
+
+@testset "Reversed functions" begin
+    revmap = flip(map)
+    @test flip(revmap) == map
+    @test revmap([1,2,3], sin) == map(sin, [1,2,3])
+    
+    func(x, y) = x - y
+    func(x, y, z) = x - y - z 
+    @test func(1, 2) == -1
+    @test func(1, 3, 6) == -8
+    flipped = flip(func)
+    @test flipped(2, 1) == -1
+    @test flipped(3, 2, 1) == -4 
+    
+end
