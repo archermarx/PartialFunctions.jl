@@ -39,6 +39,7 @@ PartialFunctions.PartialFunction{typeof(println),Tuple{String}}
 """
 ($)(f::Function, args::Tuple) = PartialFunction(f, args)
 ($)(f::Function, arg) = PartialFunction(f, (arg,))
+($)(f::DataType, args) = ($)(identity∘f, args)
 
 """
     <|(f, args)
