@@ -61,6 +61,53 @@ julia> typeof(simonsays)
 PartialFunctions.PartialFunction{typeof(println),Tuple{String}}
 ```
 
+You can add keyword arguments by passing a `NamedTuple`
+```jldoctest
+julia> sort_by_length = sort $ (;by = length)
+sort(...; by = length, ...)
+
+julia> sort_by_length([[1,2,3], [1,2]])
+2-element Vector{Vector{Int64}}:
+ [1, 2]
+ [1, 2, 3]
+```
+
+You can pass arguments and keyword arguments at the same time
+```julia
+julia> a = [[1,2,3], [1,2]];
+
+julia> sort_a_by_length = sort $ (a, (;by = length))
+sort([[1, 2, 3], [1, 2]], ...; by = length, ...)
+
+julia> sort_a_by_length()
+2-element Vector{Vector{Int64}}:
+ [1, 2]
+ [1, 2, 3]
+```
+
+You can also pass a tuple of arguments to this form, or pass the args first then the keyword args second to reduce the number of parentheses. Care must be taken here to avoid unintended results. 
+
+```julia
+# These are equivalent
+sort $ a $ (;by = length)
+sort $ (a, (;by = length))
+sort $ ((a,), (;by = length))
+```
+The following are incorrect, or will yield unintended results
+```jldoctest
+julia> sort $ (a, by = length)
+sort(..., a = [[1,2,3], [1,2]], by = length)
+```
+In this first case, `a` is parsed as a part of the NamedTuple and is thus treated as a keyword argument instead of a positional argument
+
+```jldoctest
+julia> sort $ (a; by = length)
+sort(length, ... )
+```
+In the second case, the argument to `julia $` is simply a block of two expressions, the result of which is the function `length`.
+
+
+
 ## The Reverse Pipe
 
 PartialFunctions also exports the `<|`, or "reverse pipe" operator, which can be used to apply the arguments succeeding it to the function preceding it. This operator has low precedence, making it useful when chaining function calls if one wants to avoid a lot of parentheses
