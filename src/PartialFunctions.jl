@@ -49,11 +49,11 @@ PartialFunctions.PartialFunction{typeof(println),Tuple{String}}
 ($)(f::Function, n::Tuple{<:Tuple, <:NamedTuple}) = let (args, kwargs) = n
     PartialFunction(f, args, kwargs)
 end
-
 ($)(f::Function, n::Tuple{<:Any, <:NamedTuple}) = let (arg, kwargs) = n
     PartialFunction(f, (arg,), kwargs)
 end
 
+($)(f::DataType, args) = ($)(identity∘f, args)
 """
     <|(f, args)
 
