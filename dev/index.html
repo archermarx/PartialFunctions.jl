@@ -5,7 +5,28 @@ f(x, y, z, ...)</code></pre><pre><code class="language-julia-repl">julia&gt; f =
 println((&quot;This is&quot;, &quot;a Tuple&quot;), ...)
 
 julia&gt; f(&quot;, and this is an additional argument&quot;)
-(&quot;This is&quot;, &quot;a Tuple&quot;), and this is an additional argument</code></pre><h2 id="Examples"><a class="docs-heading-anchor" href="#Examples">Examples</a><a id="Examples-1"></a><a class="docs-heading-anchor-permalink" href="#Examples" title="Permalink"></a></h2><pre><code class="language-julia-repl">julia&gt; using PartialFunctions
+(&quot;This is&quot;, &quot;a Tuple&quot;), and this is an additional argument</code></pre><p>You can add keyword arguments by passing a <code>NamedTuple</code></p><pre><code class="language-julia">julia&gt; sort_by_length = sort $ (;by = length)
+sort(...; by = length, ...)
+
+julia&gt; sort_by_length([[1,2,3], [1,2]])
+2-element Vector{Vector{Int64}}:
+ [1, 2]
+ [1, 2, 3]</code></pre><p>You can pass arguments and keyword arguments at the same time</p><pre><code class="language-julia">julia&gt; a = [[1,2,3], [1,2]];
+
+julia&gt; sort_a_by_length = sort $ (a, (;by = length))
+sort([[1, 2, 3], [1, 2]], ...; by = length, ...)
+
+julia&gt; sort_a_by_length()
+2-element Vector{Vector{Int64}}:
+ [1, 2]
+ [1, 2, 3]</code></pre><p>You can also pass a tuple of arguments to this form, or pass the args first then the keyword args second to reduce the number of parentheses. Care must be taken here to avoid unintended results. </p><pre><code class="language-julia"># These are equivalent
+sort $ a $ (;by = length)
+sort $ (a, (;by = length))
+sort $ ((a,), (;by = length))</code></pre><p>The following are incorrect, or will yield unintended results</p><pre><code class="language-julia">julia&gt; a = [[1,2,3], [1,2]];
+
+julia&gt; sort $ (a, by = length)
+sort(..., a = [[1,2,3], [1,2]], by = length)</code></pre><p>In this first case, <code>a</code> is parsed as a part of the NamedTuple and is thus treated as a keyword argument instead of a positional argument</p><pre><code class="language-julia">julia&gt; sort $ (a; by = length)
+sort(length, ... )</code></pre><p>In the second case, the argument to <code>julia $</code> is simply a block of two expressions, the result of which is the function <code>length</code>.</p><h2 id="Examples"><a class="docs-heading-anchor" href="#Examples">Examples</a><a id="Examples-1"></a><a class="docs-heading-anchor-permalink" href="#Examples" title="Permalink"></a></h2><pre><code class="language-julia-repl">julia&gt; using PartialFunctions
 
 julia&gt; a(x) = x^2
 a (generic function with 1 method)
@@ -21,13 +42,10 @@ julia&gt; f([1,2,3])
 println(&quot;Simon says: &quot;, ...)
 
 julia&gt; simonsays(&quot;Partial function application is cool!&quot;)
-Simon says: Partial function application is cool!
-
-julia&gt; typeof(simonsays)
-PartialFunctions.PartialFunction{typeof(println),Tuple{String}}</code></pre><h2 id="The-Reverse-Pipe"><a class="docs-heading-anchor" href="#The-Reverse-Pipe">The Reverse Pipe</a><a id="The-Reverse-Pipe-1"></a><a class="docs-heading-anchor-permalink" href="#The-Reverse-Pipe" title="Permalink"></a></h2><p>PartialFunctions also exports the <code>&lt;|</code>, or &quot;reverse pipe&quot; operator, which can be used to apply the arguments succeeding it to the function preceding it. This operator has low precedence, making it useful when chaining function calls if one wants to avoid a lot of parentheses</p><p>Here&#39;s an extremely contrived example to add a bunch of numbers together</p><pre><code class="language-julia-repl">julia&gt; (+) $ 2 $ 3 $ 5 $ 10 &lt;| 12
+Simon says: Partial function application is cool!</code></pre><h2 id="The-Reverse-Pipe"><a class="docs-heading-anchor" href="#The-Reverse-Pipe">The Reverse Pipe</a><a id="The-Reverse-Pipe-1"></a><a class="docs-heading-anchor-permalink" href="#The-Reverse-Pipe" title="Permalink"></a></h2><p>PartialFunctions also exports the <code>&lt;|</code>, or &quot;reverse pipe&quot; operator, which can be used to apply the arguments succeeding it to the function preceding it. This operator has low precedence, making it useful when chaining function calls if one wants to avoid a lot of parentheses</p><p>Here&#39;s an extremely contrived example to add a bunch of numbers together</p><pre><code class="language-julia-repl">julia&gt; (+) $ 2 $ 3 $ 5 $ 10 &lt;| 12
 32</code></pre><p>Unlike the normal pipe (<code>|&gt;</code>), it can also be used with tuples of arguments</p><pre><code class="language-julia-repl">julia&gt; (+) &lt;| (1, 2)...
 3</code></pre><p>Passing an empty tuple calls the preceding function with zero arguments</p><pre><code class="language-julia-repl">julia&gt; a = isequal $ (1, 2)
 isequal(1, 2, ...)
 
 julia&gt; isequal $ (1, 2) &lt;| ()   # equivalent to a() or isequal(1, 2)
-false</code></pre></article><nav class="docs-footer"><a class="docs-footer-nextpage" href="internals/">Internals »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Tuesday 1 December 2020 15:44">Tuesday 1 December 2020</span>. Using Julia version 1.5.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+false</code></pre></article><nav class="docs-footer"><a class="docs-footer-nextpage" href="internals/">Internals »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Tuesday 10 August 2021 19:23">Tuesday 10 August 2021</span>. Using Julia version 1.5.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
