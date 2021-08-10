@@ -32,37 +32,9 @@ julia> f(", and this is an additional argument")
 ("This is", "a Tuple"), and this is an additional argument
 ```
 
-## Examples
-
-```jldoctest
-julia> using PartialFunctions
-
-julia> a(x) = x^2
-a (generic function with 1 method)
-
-julia> f = map $ a
-map(a, ...)
-
-julia> f([1,2,3])
-3-element Array{Int64,1}:
- 1
- 4
- 9
-```
- 
-```jldoctest
-julia> simonsays = println $ "Simon says: "
-println("Simon says: ", ...)
-
-julia> simonsays("Partial function application is cool!")
-Simon says: Partial function application is cool!
-
-julia> typeof(simonsays)
-PartialFunctions.PartialFunction{typeof(println),Tuple{String}}
-```
 
 You can add keyword arguments by passing a `NamedTuple`
-```jldoctest
+```julia
 julia> sort_by_length = sort $ (;by = length)
 sort(...; by = length, ...)
 
@@ -94,19 +66,46 @@ sort $ (a, (;by = length))
 sort $ ((a,), (;by = length))
 ```
 The following are incorrect, or will yield unintended results
-```jldoctest
+```julia
+julia> a = [[1,2,3], [1,2]];
+
 julia> sort $ (a, by = length)
 sort(..., a = [[1,2,3], [1,2]], by = length)
 ```
 In this first case, `a` is parsed as a part of the NamedTuple and is thus treated as a keyword argument instead of a positional argument
 
-```jldoctest
+```julia
 julia> sort $ (a; by = length)
 sort(length, ... )
 ```
 In the second case, the argument to `julia $` is simply a block of two expressions, the result of which is the function `length`.
 
 
+## Examples
+
+```jldoctest
+julia> using PartialFunctions
+
+julia> a(x) = x^2
+a (generic function with 1 method)
+
+julia> f = map $ a
+map(a, ...)
+
+julia> f([1,2,3])
+3-element Array{Int64,1}:
+ 1
+ 4
+ 9
+```
+ 
+```jldoctest
+julia> simonsays = println $ "Simon says: "
+println("Simon says: ", ...)
+
+julia> simonsays("Partial function application is cool!")
+Simon says: Partial function application is cool!
+```
 
 ## The Reverse Pipe
 
