@@ -30,6 +30,46 @@ julia> f(", and this is an additional argument")
 ("This is", "a Tuple"), and this is an additional argument
 ```
 
+You can add keyword arguments by passing a `NamedTuple`
+```julia
+julia> sort_by_length = sort $ (;by = length)
+sort(...; by = length, ...)
+
+julia> sort_by_length([[1,2,3], [1,2]])
+2-element Vector{Vector{Int64}}:
+ [1, 2]
+ [1, 2, 3]
+```
+
+You can pass arguments and keyword arguments at the same time
+```julia
+julia> a = [[1,2,3], [1,2]];
+
+julia> sort_a_by_length = sort $ (a, (;by = length))
+sort([[1, 2, 3], [1, 2]], ...; by = length, ...)
+
+julia> sort_a_by_length()
+2-element Vector{Vector{Int64}}:
+ [1, 2]
+ [1, 2, 3]
+```
+
+You can also pass a tuple of arguments to this form, or pass the args first then the keyword args second to reduce the number of parentheses. Care must be taken here to avoid unintended results. 
+
+```julia
+# These are equivalent
+sort $ a $ (;by = length)
+sort $ (a, (;by = length))
+sort $ ((a,), (;by = length))
+
+# These are incorrect, or will yield unintended results
+julia> sort $ (a, by = length)
+sort(..., a = [[1,2,3], [1,2]], by = length) # a treated as part of NamedTuple
+
+julia> sort $ (a; by = length)
+sort(length, ... ) # the argument is an expression that evaluates to 'length'
+```
+
 ## Examples
 
 ```julia

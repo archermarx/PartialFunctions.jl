@@ -5,17 +5,22 @@ include("reversedfunctions.jl")
 
 name = (string ∘ Symbol)
 
-struct PartialFunction{F<:Function, T<:Tuple} <: Function
+struct PartialFunction{F<:Function, T<:Tuple, N<:NamedTuple} <: Function
     func::F
     args::T
-    PartialFunction(f::F, args::T) where {F<:Function, T<:Tuple} = new{F, T}(f, args)
-    function PartialFunction(f::PartialFunction, newargs::T) where T<:Tuple
-        allargs = (f.args..., newargs...)
-        new{typeof(f.func), typeof(allargs)}(f.func, allargs)
+    kwargs::N
+    PartialFunction(f, args::T, kwargs::N) where {T<:Tuple, N<:NamedTuple} = let
+        new{typeof(f), T, N}(f, args, kwargs)
     end
 end
 
-(p::PartialFunction)(newargs...) = p.func(p.args..., newargs...)
+function PartialFunction(f::PartialFunction, newargs::Tuple, newkwargs::NamedTuple)
+    allargs = (f.args..., newargs...)
+    allkwargs = (;f.kwargs..., newkwargs...)
+    PartialFunction(f.func, allargs, allkwargs)
+end
+
+(p::PartialFunction)(newargs...; newkwargs...) = p.func(p.args..., newargs...; p.kwargs..., newkwargs...)
 
 """
     (\$)(f::Function, args...)
@@ -38,8 +43,16 @@ julia> typeof(simonsays)
 PartialFunctions.PartialFunction{typeof(println),Tuple{String}}
 ```
 """
-($)(f::Function, args::Tuple) = PartialFunction(f, args)
-($)(f::Function, arg) = PartialFunction(f, (arg,))
+($)(f::Function, args::Tuple) = PartialFunction(f, args, (;))
+($)(f::Function, arg) = PartialFunction(f, (arg,), (;))
+($)(f::Function, kwargs::NamedTuple) = PartialFunction(f, (), kwargs)
+($)(f::Function, n::Tuple{<:Tuple, <:NamedTuple}) = let (args, kwargs) = n
+    PartialFunction(f, args, kwargs)
+end
+
+($)(f::Function, n::Tuple{<:Any, <:NamedTuple}) = let (arg, kwargs) = n
+    PartialFunction(f, (arg,), kwargs)
+end
 
 """
     <|(f, args)
@@ -70,7 +83,12 @@ julia> map \$ Int <| [1.0, 2.0, 3.0]
 
 function Base.Symbol(pf::PartialFunction)
     func_name = name(pf.func)
-    argstring = "(" * join(repr.(pf.args), ", ") *", ...)"
+    argstring = "(" * join(repr.(pf.args), ", ") *", ..."
+    if isempty(pf.kwargs)
+        argstring *= ")"
+    else
+        argstring *= "; " * strip(repr(pf.kwargs), ['(', ')']) * " ...)"
+    end
     Base.Symbol("$(func_name)$(argstring)")
 end
 
