@@ -38,9 +38,6 @@ println("Simon says: ", ...)
 
 julia> simonsays("Partial function application is cool!")
 Simon says: Partial function application is cool!
-
-julia> typeof(simonsays)
-PartialFunctions.PartialFunction{typeof(println),Tuple{String}}
 ```
 """
 ($)(f::Function, args::Tuple) = PartialFunction(f, args, (;))
