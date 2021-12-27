@@ -1,6 +1,7 @@
 module PartialFunctions
 
-export $, <|
+export $
+export <|
 include("reversedfunctions.jl")
 
 name = (string ∘ Symbol)
@@ -55,7 +56,7 @@ end
     <|(f, args)
 
 Applies a function to the succeeding argument or tuple of arguments. Acts as the reverse
-of [`|>`](@ref), and is especially useful when combined with partial functions for 
+of [`|>`](@ref), and is especially useful when combined with partial functions for
 an alternative, low-parenthese function chaining syntax
 
 # Examples
