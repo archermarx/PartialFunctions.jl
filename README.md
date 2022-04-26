@@ -4,6 +4,7 @@
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://archermarx.github.io/PartialFunctions.jl/dev)
 [![Build Status](https://travis-ci.com/archermarx/PartialFunctions.jl.svg?branch=master)](https://travis-ci.com/archermarx/PartialFunctions.jl)
 [![Coverage Status](https://coveralls.io/repos/github/archermarx/PartialFunctions.jl/badge.png?branch=master)](https://coveralls.io/github/archermarx/PartialFunctions.jl?branch=master)
+[![Downloads](https://shields.io/endpoint?url=https://pkgs.genieframework.com/api/v1/badge/PartialFunctions)](https://pkgs.genieframework.com?packages=PartialFunctions)
 
 This is a small Julia package that makes partial function application as simple as possible
 
