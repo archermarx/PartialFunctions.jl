@@ -1,8 +1,9 @@
 module PartialFunctions
 
-export $
+export $, @$
 export <|
 include("reversedfunctions.jl")
+include("generalizedpartialfunctions.jl")
 
 name = (string ∘ Symbol)
 

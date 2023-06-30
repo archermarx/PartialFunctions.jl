@@ -121,3 +121,5 @@ isequal(1, 2, ...)
 julia> isequal $ (1, 2) <| ()   # equivalent to a() or isequal(1, 2)
 false
 ```
+
+## Generalized Partial Functions using `@$`
