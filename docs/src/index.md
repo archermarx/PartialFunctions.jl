@@ -132,3 +132,20 @@ julia> isequal $ (1, 2) <| ()   # equivalent to a() or isequal(1, 2)
 false
 ```
 
+## The `@$` Macro
+
+`@$` allows users to create general partial functions by replacing the currently known
+arguments with `_`. For example, we can implement matrix multiplication as:
+
+```jldoctest
+julia> matmul(A, X, B) = A * X .+ B
+matmul (generic function with 1 method)
+
+julia> A = randn(2, 2); B = rand(2, 2); X = randn(2, 2);
+
+julia> pf = @$ matmul(_, X, _)
+matmul(_, X, _)
+
+julia> pf(A, B) ≈ matmul(A, X, B)
+true
+```

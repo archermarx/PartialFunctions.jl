@@ -34,12 +34,10 @@ end
             end
         end
         return quote
-            @show pf.func
-            @show typeof.(($(final_args...),))
             pf.func($(final_args...); pf.kwargs..., kwargs...)
         end
     else
-        # Construct another GeneralizedPartialFunction
+        return :(pf $ (args..., (; kwargs...)))
     end
 end
 
@@ -62,13 +60,14 @@ macro ($)(expr::Expr)
         push!(kwargs_keys, kwarg.args[1])
         push!(kwargs_values, kwarg.args[2])
     end
-    final_kwargs = NamedTuple{Tuple(kwargs_keys)}(kwargs_values)
+    kwargs_keys = Tuple(kwargs_keys)
 
     non_underscore_args_pos = Tuple(setdiff(1:length(args), underscore_args_pos))
     non_underscore_args = map(Base.Fix1(getindex, args), non_underscore_args_pos)
     stored_args = NamedTuple{Symbol.(non_underscore_args_pos)}(non_underscore_args)
 
     return :(GeneralizedPartialFunction($(esc(string(expr))), $(esc(f)),
-                                        $(esc(underscore_args_pos)), $(esc(args)),
-                                        $(esc(final_kwargs))))
+                                        $(esc(underscore_args_pos)),
+                                        NamedTuple{$(esc(Symbol.(non_underscore_args_pos)))}(tuple($(esc.(non_underscore_args)...))),
+                                        NamedTuple{$(esc(kwargs_keys))}(tuple($(esc.(kwargs_values)...)))))
 end
