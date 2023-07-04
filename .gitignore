@@ -3,4 +3,4 @@
 *.jl.mem
 /Manifest.toml
 /docs/build/
-/.vscode/*
+.vscode/*

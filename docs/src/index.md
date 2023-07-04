@@ -57,7 +57,7 @@ julia> sort_a_by_length()
  [1, 2, 3]
 ```
 
-You can also pass a tuple of arguments to this form, or pass the args first then the keyword args second to reduce the number of parentheses. Care must be taken here to avoid unintended results. 
+You can also pass a tuple of arguments to this form, or pass the args first then the keyword args second to reduce the number of parentheses. Care must be taken here to avoid unintended results.
 
 ```julia
 # These are equivalent
@@ -93,12 +93,12 @@ julia> f = map $ a
 map(a, ...)
 
 julia> f([1,2,3])
-3-element Array{Int64,1}:
+3-element Vector{Int64}:
  1
  4
  9
 ```
- 
+
 ```jldoctest
 julia> simonsays = println $ "Simon says: "
 println("Simon says: ", ...)
