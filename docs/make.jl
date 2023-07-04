@@ -1,16 +1,10 @@
 using PartialFunctions
 using Documenter
 
+push!(LOAD_PATH,"../src/")
+
 makedocs(;
-    modules=[PartialFunctions],
-    authors="Thomas Marks <marksta@umich.edu> and contributors",
-    repo="https://github.com/archermarx/PartialFunctions.jl/blob/{commit}{path}#L{line}",
-    sitename="PartialFunctions.jl",
-    format=Documenter.HTML(;
-        prettyurls=get(ENV, "CI", "false") == "true",
-        canonical="https://archermarx.github.io/PartialFunctions.jl",
-        assets=String[],
-    ),
+    sitename = "PartialFunctions.jl",
     pages=[
         "Home" => "index.md",
         "Internals" => "internals.md"
@@ -18,5 +12,5 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/archermarx/PartialFunctions.jl",
+    repo="github.com/archermarx/PartialFunctions.jl.git",
 )
