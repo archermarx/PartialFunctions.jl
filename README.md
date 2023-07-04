@@ -96,6 +96,11 @@ julia> simonsays("Partial function application is cool!")
 Simon says: Partial function application is cool!
 ```
 
+## Reversed functions
+
+`PartialFunctions` exports the `flip` function, which creates a `ReversedFunction` object. This is a function which takes
+its arguments in reverse order.
+
 ## The Reverse Pipe
 
 PartialFunctions also exports the `<|`, or "reverse pipe" operator, which can be used to apply the arguments succeeding it to the function preceding it. This operator has low precedence, making it useful when chaining function calls if one wants to avoid a lot of parentheses
