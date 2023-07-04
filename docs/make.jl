@@ -12,5 +12,5 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/archermarx/PartialFunctions.jl.git",
+    repo="github.com/archermarx/PartialFunctions.jl",
 )
