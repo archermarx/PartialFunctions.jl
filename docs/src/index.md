@@ -134,7 +134,7 @@ false
 
 ## The `@$` Macro
 
-`@$` allows users to create general partial functions by replacing the currently known
+`@$` allows users to create general partial functions by replacing the currently unknown
 arguments with `_`. For example, we can implement matrix multiplication as:
 
 ```jldoctest
