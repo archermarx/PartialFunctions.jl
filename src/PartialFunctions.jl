@@ -4,7 +4,7 @@ export $
 export <|
 include("reversedfunctions.jl")
 
-name = (string ∘ Symbol)
+name(x) = (string ∘ Symbol)(x)
 
 struct PartialFunction{F<:Function, T<:Tuple, N<:NamedTuple} <: Function
     func::F

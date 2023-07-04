@@ -83,7 +83,7 @@ In the second case, the argument to `julia $` is simply a block of two expressio
 
 ## Examples
 
-```jldoctest
+```julia
 julia> using PartialFunctions
 
 julia> a(x) = x^2
