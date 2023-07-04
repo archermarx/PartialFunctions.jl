@@ -2,7 +2,7 @@
 
 [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://archermarx.github.io/PartialFunctions.jl/stable)
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://archermarx.github.io/PartialFunctions.jl/dev)
-[![Build Status](https://github.com/archermarx/PartialFunctions.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/archermarx/PartialFunctions.jl/actions/workflows/ci.yml) [![codecov](https://codecov.io/gh/archermarks/PartialFunctions.jl/branch/master/graph/badge.svg?token=cEoGN49eZp)](https://codecov.io/gh/archermarx/PartialFunctions.jl)
+[![Build Status](https://github.com/archermarx/PartialFunctions.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/archermarx/PartialFunctions.jl/actions/workflows/ci.yml) [![codecov](https://codecov.io/gh/archermarx/PartialFunctions.jl/branch/master/graph/badge.svg?token=cEoGN49eZp)](https://codecov.io/gh/archermarx/PartialFunctions.jl)
 [![Downloads](https://shields.io/endpoint?url=https://pkgs.genieframework.com/api/v1/badge/PartialFunctions)](https://pkgs.genieframework.com?packages=PartialFunctions)
 
 This is a small Julia package that makes partial function application as simple as possible
