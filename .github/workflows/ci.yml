@@ -62,7 +62,7 @@ jobs:
           julia --project=docs -e '
             using Documenter: doctest
             using PartialFunctions
-            doctest(PartialFunctions)
+            doctest(PartialFunctions)'
       - run: julia --project=docs docs/make.jl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
