@@ -70,7 +70,7 @@ julia> (+) <| (2, 3)...
 5
 
 julia> map \$ Int <| [1.0, 2.0, 3.0]
-3-element Array{Int64,1}:
+3-element Vector{Int64}:
  1
  2
  3
