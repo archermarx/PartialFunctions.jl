@@ -2,7 +2,8 @@ module PartialFunctions
 
 using MacroTools
 
-export $, @$
+export $
+export @$
 export <|
 include("reversedfunctions.jl")
 
@@ -96,7 +97,7 @@ Partially apply the given arguments to `f`. Unknown arguments are represented by
 
 # Examples
 
-```jldoctest
+```julia-repl
 julia> matmul(A, X, B; C = 1) = A * X .+ B .* C
 matmul (generic function with 1 method)
 

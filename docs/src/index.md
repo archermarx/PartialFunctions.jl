@@ -142,7 +142,7 @@ false
 `@$` allows users to create general partial functions by replacing the currently unknown
 arguments with `_`. For example, we can implement matrix multiplication as:
 
-```jldoctest
+```julia-repl
 julia> matmul(A, X, B) = A * X .+ B
 matmul (generic function with 1 method)
 
