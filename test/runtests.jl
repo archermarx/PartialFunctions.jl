@@ -9,7 +9,7 @@ greet(greeting, name, punctuation) = "$(greeting), $(name)$(punctuation)"
         @test map((+)$2, [1,2,3]) == [3, 4, 5]
 
 		# Repr on functions changed after v1.10
-		@static if VERSION > v"1.10"
+		@static if VERSION < v"1.11"
 			@test repr(map $ a) == "map(Main.a, ...)"
 		else
 			@test repr(map $ a) == "map(a, ...)"
