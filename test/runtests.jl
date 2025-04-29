@@ -7,7 +7,13 @@ greet(greeting, name, punctuation) = "$(greeting), $(name)$(punctuation)"
 @testset "PartialFunctions.jl" begin
     @testset "Partial functions" begin
         @test map((+)$2, [1,2,3]) == [3, 4, 5]
-        @test repr(map $ a) == "map(a, ...)"
+
+		# Repr on functions changed after v1.10
+		@static if VERSION > v"1.10"
+			@test repr(map $ a) == "map(Main.a, ...)"
+		else
+			@test repr(map $ a) == "map(a, ...)"
+		end
         @test (map $ a)([1, 2, 3]) == [1, 4, 9]
         
         @test greet("Hello", "Bob", "!") == "Hello, Bob!"
@@ -55,7 +61,8 @@ greet(greeting, name, punctuation) = "$(greeting), $(name)$(punctuation)"
     @testset "Generalized Partial Functions" begin
         @test map(@$(+(2, _)), [1,2,3]) == [3, 4, 5]
         @test map(@$(+(_, 2)), [1,2,3]) == [3, 4, 5]
-        @test repr(@$(map(a, _))) == "map(a, _)"
+
+		@test repr(@$(map(a,_))) == "map(a, _)"
         @test (@$(map(a, _)))([1, 2, 3]) == [1, 4, 9]
         
         @test greet("Hello", "Bob", "!") == "Hello, Bob!"

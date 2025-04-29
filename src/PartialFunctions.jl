@@ -180,7 +180,7 @@ function Base.Symbol(pf::PartialFunction)
     Base.Symbol("$(func_name)$(argstring)")
 end
 
-Base.show(io::IO, pf::PartialFunction{nothing}) = print(io, name(pf))
+Base.show(io::IO, pf::PartialFunction{nothing}) = print(io,  name(pf))
 Base.show(io::IO, ::MIME"text/plain", pf::PartialFunction{nothing}) = show(io, pf)
 Base.show(io::IO, pf::PartialFunction) = print(io, pf.expr_string)
 Base.show(io::IO, ::MIME"text/plain", pf::PartialFunction) = print(io, pf.expr_string)
