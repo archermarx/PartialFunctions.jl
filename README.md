@@ -1,6 +1,5 @@
 # PartialFunctions
 
-[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://archermarx.github.io/PartialFunctions.jl/dev)
 [![Build Status](https://github.com/archermarx/PartialFunctions.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/archermarx/PartialFunctions.jl/actions/workflows/ci.yml) [![codecov](https://codecov.io/gh/archermarx/PartialFunctions.jl/branch/master/graph/badge.svg?token=cEoGN49eZp)](https://codecov.io/gh/archermarx/PartialFunctions.jl)
 
 This is a small Julia package that makes partial function application as simple as possible
