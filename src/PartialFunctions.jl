@@ -30,6 +30,10 @@ function PartialFunction(f::PartialFunction, newargs::Tuple, newkwargs::NamedTup
     PartialFunction(f.func, allargs, allkwargs)
 end
 
+function PartialFunction(expr::String, func::F, args::T, kwargs::N) where {F <: Function, T <: Tuple, N <: NamedTuple}
+    return PartialFunction{nothing, nothing, F, T, N}(expr, func, args, kwargs)
+end
+
 (p::PartialFunction{nothing})(newargs...; newkwargs...) = p.func(p.args..., newargs...; p.kwargs..., newkwargs...)
 
 """
