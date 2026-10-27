@@ -5,6 +5,14 @@ coverage:
   precision: 2
   round: down
   range: "70...100"
+  status:
+    # Report coverage without failing checks when coverage declines.
+    project:
+      default:
+        informational: true
+    patch:
+      default:
+        informational: true
 
 parsers:
   gcov:

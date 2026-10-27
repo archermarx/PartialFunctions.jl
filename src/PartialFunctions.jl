@@ -9,6 +9,22 @@ include("reversedfunctions.jl")
 
 name(x) = (string ∘ Symbol)(x)
 
+# Declare the PartialFunction public for versions that support the `public` keyword
+VERSION >= v"1.11.0-DEV.469" && eval(Meta.parse("public PartialFunction"))
+
+"""
+    PartialFunction{KL, UL, F<:Function, T<:Tuple, N<:NamedTuple}
+
+Struct representing a function to which arguments and keyword arguments have been partially applied.
+Analogous to Base.FixOne and similar, though more general.
+The type parameters KL and UL encode tuples of integers which store the positions of known and unknown arguments when the `PartialFunction` is created with a macro.
+
+# Fields
+- expr_string::String: Stores the expression string if the `PartialFunction` was constructed using the `@\$` macro.
+- func::F: The base function to which the arguments are applied.
+- args::T: Any positional arguments passed to the function, specified as a `Tuple`.
+- kwargs::N: Any keyword arguments passed to the function, specified as a `NamedTuple`
+"""
 struct PartialFunction{KL, UL, F<:Function, T<:Tuple, N<:NamedTuple} <: Function
     expr_string::String
     func::F
